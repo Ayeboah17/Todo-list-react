@@ -1,22 +1,22 @@
-import React  from 'react'
+import React from 'react'
 import { addDoc, collection, doc, getDocs,deleteDoc, updateDoc } from 'firebase/firestore'
 import { useState,useEffect } from 'react'
 import { Button,CardContent,Container,Dropdown,Form,FormField,FormGroup,Header,Icon, Input, Loader, Modal, ModalActions, ModalDescription, ModalHeader, TextArea } from 'semantic-ui-react'
 import {Card,CardHeader,CardDescription,CardMeta} from 'semantic-ui-react'
 import { db } from '../Data/FireBase'
 
+  const allTasks = collection(db,'todo')
+
 export default function Controls() {
 
 
   const [openMenu,setOpenMenu] = useState(false)
   const [deleteMenu,setDeleteMenu] = useState(false)
-  const [reload,setReload] = useState()
-
+  const [complete,setComplete] = useState(false)
 
   const [tasks,setTasks] = useState()
 
   useEffect(()=>{
-    const allTasks = collection(db,'todo')
     const getAllTasks = async ()=>{
       try{
         const data = await getDocs(allTasks)
@@ -32,7 +32,7 @@ export default function Controls() {
     }
     getAllTasks()
     
-  },[reload])
+  },[])
 
 
   const deleteTask = async (id)=>{
@@ -50,7 +50,6 @@ export default function Controls() {
   
 const [date,setDate] = useState()
 const [time,setTime] = useState()
-const [complete,setComplete] = useState(false)
 const [description,setDescription] = useState()
 const [tName,setTname] = useState()
 
@@ -168,7 +167,7 @@ const [tName,setTname] = useState()
       <CardContent>{task.description}</CardContent>
       <CardDescription>{typeof(task.due)=='string'?'No Deadline':new Date(task.due).toLocaleDateString(undefined,{weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',hour:'numeric',minute:'numeric'})}</CardDescription>
       <br/>
-      <CardMeta><Input type='checkbox' checked={task.complete} onChange={(e)=>{e.target.checked?setReload(true):setReload(false);updateTask(task.id,e.target.checked)}}  size='massive'/></CardMeta>
+      <CardMeta><Input type='checkbox' checked={task.complete} onChange={(e)=>{updateTask(task.id,e.target.checked)}}  size='massive'/></CardMeta>
     <Form widths='equal'>
       <FormGroup >
       <FormField><Button icon='trash' size='small' onClick={showDeleteMenu} /></FormField>
