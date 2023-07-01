@@ -1,10 +1,9 @@
-import React, { useRef }  from 'react'
+import React  from 'react'
 import { addDoc, collection, doc, getDocs,deleteDoc, updateDoc } from 'firebase/firestore'
 import { useState,useEffect } from 'react'
-import { Button,CardContent,CardGroup,Checkbox,Confirm,Container,Dropdown,Form,FormField,FormGroup,Header,HeaderContent,Icon, Input, Loader, Modal, ModalActions, ModalContent, ModalDescription, ModalHeader, Progress, Select, TextArea } from 'semantic-ui-react'
+import { Button,CardContent,Container,Dropdown,Form,FormField,FormGroup,Header,Icon, Input, Loader, Modal, ModalActions, ModalDescription, ModalHeader, TextArea } from 'semantic-ui-react'
 import {Card,CardHeader,CardDescription,CardMeta} from 'semantic-ui-react'
 import { db } from '../Data/FireBase'
-import { keyboard } from '@testing-library/user-event/dist/keyboard'
 
 export default function Controls() {
 

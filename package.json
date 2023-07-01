@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@babel/plugin-proposal-private-property-in-object": "13.5.0",
     "firebase": "^9.23.0",
     "gh-pages": "^5.0.0",
     "react": "^18.2.0",
@@ -40,6 +41,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ],
-    "homepage": "https://myusername.github.io/my-app"
+    "homepage": "https://ayeboah17.github.io/Todo-list-react"
   }
 }

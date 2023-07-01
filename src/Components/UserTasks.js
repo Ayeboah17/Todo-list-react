@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Tasks } from '../Data/Tasks'
-import { Card, CardDescription, CardHeader, CardMeta } from 'semantic-ui-react'
+import { Card, CardHeader, CardMeta } from 'semantic-ui-react'
 
 export default function UserTasks() {
-    const [data,setData] = useState()
   return (
     <div id='tasks'>
 
