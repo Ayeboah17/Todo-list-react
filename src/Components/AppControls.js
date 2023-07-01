@@ -13,10 +13,10 @@ export default function Controls() {
   const [reload,setReload] = useState()
 
 
-  const allTasks = collection(db,'todo')
   const [tasks,setTasks] = useState()
 
   useEffect(()=>{
+    const allTasks = collection(db,'todo')
     const getAllTasks = async ()=>{
       try{
         const data = await getDocs(allTasks)
