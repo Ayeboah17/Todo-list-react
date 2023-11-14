@@ -25,7 +25,7 @@ export default function Controls() {
           id:doc.id
         }))
         setTasks(filteredData);
-        console.log('shgdhs')
+        console.log(1)
       }catch (err){
         console.error(err)
       }
@@ -52,6 +52,7 @@ const [date,setDate] = useState()
 const [time,setTime] = useState()
 const [description,setDescription] = useState()
 const [tName,setTname] = useState()
+const [updateMenu,setUpdateMenu] = useState()
 
 
   const submitTask = async()=>{
@@ -59,8 +60,8 @@ const [tName,setTname] = useState()
       await addDoc(allTasks,{
         tName: tName,
         due: date && time?new Date(`${date} ${time}`).getTime():'No deadline',
-        description: description,
-        complete: complete
+        description: description?description:'',
+        complete: complete?complete:''
       });
       hideMenu();
       window.location.reload()
@@ -75,7 +76,25 @@ const [tName,setTname] = useState()
       await updateDoc(doc(db,'todo',id),{
         complete: completed
       });
+      window.location.reload()
       
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  const fullUpdate = async(id)=>{
+    try{
+      await updateDoc(doc(db,'todo',id),{
+        tName: tName,
+        due: date && time?new Date(`${date} ${time}`).getTime():'No deadline',
+        description: description?description:'',
+        complete: complete?complete:''
+      });
+      hideMenu();
+      window.location.reload()
+      
+
     }catch(err){
       console.error(err)
     }
@@ -95,7 +114,15 @@ const [tName,setTname] = useState()
   const hideDeleteMenu = ()=>{
     setDeleteMenu(false);
     window.location.reload()
-    
+  }
+
+  const showUpdateMenu=()=>{
+    setUpdateMenu(true)
+  }
+
+  const hideUpdateMenu=()=>{
+    setUpdateMenu(false)
+    window.location.reload()
   }
 
 
@@ -107,7 +134,6 @@ const [tName,setTname] = useState()
     {key: 'almostDue', text:'Almost Due', value:'almpstDue'},
     {key: 'none', text:'No Deadline', value:'none'}
   ]
-
 
 
   
@@ -162,7 +188,9 @@ const [tName,setTname] = useState()
       <Card.Group itemsPerRow={3}>
 {tasks? tasks.map(task=>(
   <>
-  <Card  color={task.complete===true?'green':'red'}>
+  
+
+  <Card  key={task.id} color={task.complete===true?'green':'red'}>
       <CardHeader>{task.tName}</CardHeader>
       <CardContent>{task.description}</CardContent>
       <CardDescription>{typeof(task.due)=='string'?'No Deadline':new Date(task.due).toLocaleDateString(undefined,{weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',hour:'numeric',minute:'numeric'})}</CardDescription>
@@ -171,12 +199,54 @@ const [tName,setTname] = useState()
     <Form widths='equal'>
       <FormGroup >
       <FormField><Button icon='trash' size='small' onClick={showDeleteMenu} /></FormField>
-      <FormField><Button icon='edit' size='small'/></FormField>
+      <FormField><Button icon='edit' size='small' onClick={showUpdateMenu}/></FormField>
 
       </FormGroup>
     </Form>
 
   </Card>
+
+
+  <Modal open={updateMenu} closeIcon onClose={hideUpdateMenu} size='masive'>
+    <ModalHeader>Add New Task</ModalHeader>
+    <ModalDescription >
+      <Container fluid textAlign='center' style={{padding:'20px'}}>
+        <Form >
+          <h5>Title</h5>
+  <FormField><Input type='text' placeholder={task.tName} onChange={(e)=>{setTname(e.target.value);console.log(tName)}}/></FormField>
+
+    <h5>Description</h5>
+  <FormField ><TextArea  placeholder={task.description} onChange={(e)=>{setDescription(e.target.value)}}  cols='50'/></FormField>
+  <h5>Deadline</h5>
+
+<FormGroup widths={'equal'}>
+  <FormField><Input type='date'  placeholder='Date' label='Date'  onChange={(e)=>{setDate(e.target.value);console.log(date)}}/></FormField>
+  <FormField><Input type='time'  placeholder='Time' label='Time'  onChange={(e)=>{setTime(e.target.value);console.log(time)}}/></FormField>
+
+</FormGroup>
+
+<br/>
+<h5>Completed</h5>
+  <FormField control={'input'} type='checkbox'   onChange={(e)=>{setComplete(e.target.checked)}}/>
+  
+</Form>
+
+</Container>
+    </ModalDescription>
+
+        <ModalActions>
+          <Button style={{backgroundColor:'#d2d3db'}} onClick={hideUpdateMenu}>Cancel</Button>
+          <Button style={{backgroundColor:'#484b6a',color:'white'}} onClick={()=>fullUpdate(task.id)}>Update Task</Button>
+        </ModalActions>
+
+      </Modal>
+
+
+
+
+
+
+
 
   <Modal style={{textAlign:'center'}} basic open={deleteMenu}>
         <Header>Are you sure you want to delete {task.name}</Header>
