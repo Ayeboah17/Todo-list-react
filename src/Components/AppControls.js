@@ -154,7 +154,7 @@ const [updateMenu,setUpdateMenu] = useState()
 
     <h5>Description</h5>
   <FormField ><TextArea  onChange={(e)=>{setDescription(e.target.value)}}  placeholder='Description' cols='50'/></FormField>
-  <h5>Deadline</h5>
+  <h5>Deadline </h5>
 
 <FormGroup widths={'equal'}>
   <FormField><Input type='date' placeholder='Date' label='Date'  onChange={(e)=>{setDate(e.target.value);console.log(date)}}/></FormField>
