@@ -139,9 +139,12 @@ const [updateMenu,setUpdateMenu] = useState()
   
 
   return (
+    /* Add task & Sorting*/
     <div>
       <Button  onClick={showMenu} style={{backgroundColor:"#484b6a",color:'white'}}><Icon name='add'></Icon> Add New Task</Button>
       <Dropdown  placeholder='Filter' defaultValue={'all'} options={options} />
+
+    {/*Add Task Modal*/}
 
       <br/><br/><br/>
       <Modal open={openMenu} closeIcon onClose={hideMenu} size='masive'>
@@ -164,7 +167,7 @@ const [updateMenu,setUpdateMenu] = useState()
 
 <br/>
 <h5>Completed</h5>
-  <FormField control={'input'} type='checkbox' value={false}  onChange={(e)=>{setComplete(e.target.value)}}/>
+  <FormField control={'input'} type='checkbox' value={false}  onChange={(e)=>{setComplete(e.target.value?true:false)}}/>
 
 
 
@@ -180,7 +183,7 @@ const [updateMenu,setUpdateMenu] = useState()
         </ModalActions>
 
       </Modal>
-
+{/*Tasks */}
       <div id='tasks' >
 
     
@@ -205,10 +208,10 @@ const [updateMenu,setUpdateMenu] = useState()
     </Form>
 
   </Card>
-
+{/*Update Task Modal*/}
 
   <Modal open={updateMenu} closeIcon onClose={hideUpdateMenu} size='masive'>
-    <ModalHeader>Add New Task</ModalHeader>
+    <ModalHeader>Update Task</ModalHeader>
     <ModalDescription >
       <Container fluid textAlign='center' style={{padding:'20px'}}>
         <Form >
@@ -227,7 +230,7 @@ const [updateMenu,setUpdateMenu] = useState()
 
 <br/>
 <h5>Completed</h5>
-  <FormField control={'input'} type='checkbox'   onChange={(e)=>{setComplete(e.target.checked)}}/>
+  <FormField control={'input'} type='checkbox'   onChange={(e)=>{setComplete(e.target.checked?true:false)}}/>
   
 </Form>
 
@@ -246,7 +249,7 @@ const [updateMenu,setUpdateMenu] = useState()
 
 
 
-
+{/*Delete Task Modal*/}
 
   <Modal style={{textAlign:'center'}} basic open={deleteMenu}>
         <Header>Are you sure you want to delete {task.name}</Header>

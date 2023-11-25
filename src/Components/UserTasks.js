@@ -6,8 +6,6 @@ export default function UserTasks() {
   return (
     <div id='tasks'>
 
-    
-
 
       {Tasks.map(task=>(
         <Card>
