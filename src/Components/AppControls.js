@@ -61,7 +61,7 @@ const [updateMenu,setUpdateMenu] = useState()
         tName: tName,
         due: date && time?new Date(`${date} ${time}`).getTime():'No deadline',
         description: description?description:'',
-        complete: complete?complete:''
+        complete: complete?complete:false
       });
       hideMenu();
       window.location.reload()
@@ -89,7 +89,7 @@ const [updateMenu,setUpdateMenu] = useState()
         tName: tName,
         due: date && time?new Date(`${date} ${time}`).getTime():'No deadline',
         description: description?description:'',
-        complete: complete?complete:''
+        complete: complete?complete:false
       });
       hideMenu();
       window.location.reload()
